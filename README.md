@@ -37,8 +37,8 @@ pip install -r requirements.txt
 - 使用 `get_geoaddr` 函数，对地址进行分割并处理地理位置。
 
 ## 数据集
-- **输入 1**：包含政府数据库的 CSV 文件。
-- **输入 2**：包含需要处理的地址数据集的 CSV 文件。
+- **data/database.csv**：包含政府数据库的 CSV 文件。
+- **data/input.csv**：包含需要处理的地址数据集的 CSV 文件。
 
 ### 数据列:
 - **政府数据库 CSV**：包含官方的地址数据。
