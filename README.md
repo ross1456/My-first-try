@@ -40,10 +40,6 @@ pip install -r requirements.txt
 - **data/database.csv**：包含政府数据库的 CSV 文件。
 - **data/input.csv**：包含需要处理的地址数据集的 CSV 文件。
 
-### 数据列:
-- **政府数据库 CSV**：包含官方的地址数据。
-- **地址数据集 CSV**：包含需要处理的原始地址信息。
-
 ## 依赖要求
 
 - Python 3.8+
