@@ -1,0 +1,9 @@
+sentence_transformers
+pinecone-client
+FlagEmbedding
+peft
+openai
+llama-index
+torch
+transformers
+pandas
