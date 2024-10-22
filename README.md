@@ -1,16 +1,14 @@
-# 地址分割与地理位置提取
+# 基于RAG和AI大模型标准化客户地址数据
 
-本项目通过自然语言处理（NLP）技术执行地址分割和地理坐标提取。它利用 OpenAI 模型和 transformers 模型，自动将地址划分为多个字段，并预测纬度/经度坐标。
+本项目通过检索增强生成(RAG)以及自然语言处理（NLP）技术执行地址分割和地理坐标提取。它利用 Llama3, BGE reranker等多个模型，自动将地址划分为多个字段，并生成GeoAddress编号。
 
-## 项目结构
 
-- **NER 提示词 1（地址分割）**：自动将地址划分为建筑名称、街道、城市、邮政编码和国家等字段。
-- **NER 提示词 2（地理位置提取）**：识别并返回给定地址的地理坐标（纬度和经度）。
-
-### 主要功能:
-- **地址分割**：将地址分解为不同的组件。
-- **地理位置提取**：从原始地址中获取纬度和经度。
-- **基于 NLP 的处理**：使用 transformers 和 OpenAI API 进行地址处理。
+## 项目结构:
+- **通过API调用大语言模型（Hagging Face Llama3）
+- **地址分割**：标准化地将地址切割为不同部分。
+- **向量化**：利用BGE-base-en-v1.5嵌入式模型，将字符串转换成向量表示。
+- **Query**：先从数据库中搜索，如未能匹配则从向量数据库中获取相似地址并重新排序(BGE-Reranker)，反之直接返回结果。
+- **地理位置提取**：根据query和相似地址，生成提示词向语言模型查询并输出标准化输出。
 
 ## 安装
 
@@ -26,26 +24,6 @@ pip install -r requirements.txt
 2. 准备好您的数据，提供包含地址信息的 CSV 文件。
 3. 运行 notebook 生成 NER 提示词，并应用模型进行地址分割和地理坐标提取。
 
-### 示例代码
-
-```python
-# 生成地址分割的 NER 提示词
-org_addr = "1600 Amphitheatre Parkway, Mountain View, CA"
-filled_prompt_1 = generate_ner_prompt(NER_PROMPT_1, org_addr)
-print(filled_prompt_1)
-
-# 生成地理位置提取的 NER 提示词
-filled_prompt_2 = generate_ner_prompt(NER_PROMPT_2, org_addr)
-print(filled_prompt_2)
-```
-
-## 函数定义
-
-项目中的重要功能几乎都被封装为函数，具体如下：
-
-- **`create_table(df)`**：创建数据库表结构，定义字段如 `building_name`。该函数将数据构造成数据库表的形式，便于后续处理和查询。
-- **`generate_ner_prompt(prompt, org_addr)`**：使用给定的地址信息填充提示词，生成适合进一步任务处理的文本。
-- **`apply_template(tokenizer, prompt)`**：将生成的提示词转换为适合模型处理的格式，可能会与 `tokenizer` 和 transformers 模型交互。
 
 ## 数据加载
 
@@ -71,8 +49,3 @@ print(filled_prompt_2)
 - Python 3.8+
 - OpenAI API 密钥（如果使用 OpenAI 进行模型推理）
 - 包含地址数据的 CSV 文件
-
-
-## 许可协议
-
-本项目采用 MIT 许可协议。
